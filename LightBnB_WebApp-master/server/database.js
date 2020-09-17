@@ -23,19 +23,12 @@ pool.connect(() => {
 const getUserWithEmail = function(email) {
   return pool.query(`SELECT * FROM users WHERE email = $1;`, [email])
   .then(res => {
-    console.log(res.rows[0])
-    return res.rows[0];
+    if (res.rows[0] === undefined) {
+      return null;
+    } else { 
+      return res.rows[0];
+    }
   });
-  // let user;
-  // for (const userId in users) {
-  //   user = users[userId];
-  //   if (user.email.toLowerCase() === email.toLowerCase()) {
-  //     break;
-  //   } else {
-  //     user = null;
-  //   }
-  // }
-  // return Promise.resolve(user);
 }
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -47,9 +40,12 @@ exports.getUserWithEmail = getUserWithEmail;
 const getUserWithId = function(id) {
   return pool.query(`SELECT * FROM users WHERE id = $1;`, [id])
   .then(res => {
-    return res.rows[0];
+    if (res.rows[0] === undefined) {
+      return null;
+    } else { 
+      return res.rows[0];
+    }
   });
-  // return Promise.resolve(users[id]);
 }
 exports.getUserWithId = getUserWithId;
 
@@ -66,10 +62,6 @@ const addUser =  function(user) {
   .then(res => {
     return res.rows[0];
   });
-  // const userId = Object.keys(users).length + 1;
-  // user.id = userId;
-  // users[userId] = user;
-  // return Promise.resolve(user);
 }
 exports.addUser = addUser;
 
